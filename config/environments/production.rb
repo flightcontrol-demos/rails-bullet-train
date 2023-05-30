@@ -65,7 +65,7 @@ Rails.application.configure do
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter     = :resque
-  # config.active_job.queue_name_prefix = "untitled_application_production"
+  # config.active_job.queue_name_prefix = "bullet_train_example_production"
 
   config.action_mailer.perform_caching = false
 
@@ -156,4 +156,6 @@ Rails.application.configure do
   # ✅ YOUR APPLICATION'S CONFIGURATION
   # If you need to customize your application's configuration, this is the place to do it. This helps avoid merge
   # conflicts in the future when Rails or Bullet Train update their own default settings.
+  config.hosts << "dwmzuyhrupf5t.cloudfront.net"
+
 end
