@@ -1,0 +1,70 @@
+{
+    "$schema": "https://app.flightcontrol.dev/schema.json",
+    "environments": [
+      {
+        "id": "production",
+        "name": "Production",
+        "region": "us-west-2",
+        "source": {
+          "branch": "main"
+        },
+        "services": [
+          {
+            "id": "bullet-train-web",
+            "name": "Bullet Train Web",
+            "buildType": "nixpacks",
+            "type": "fargate",
+            "cpu": 0.25,
+            "memory": 0.5,
+            "minInstances": 1,
+            "maxInstances": 1,
+            "buildCommand": "mkdir -p tmp/pids && bundle exec rails db:migrate && bundle exec rake assets:precompile",
+            "envVariables": {
+              "DATABASE_URL": {
+                "fromService": {
+                  "id": "db",
+                  "value": "dbConnectionString"
+                }
+              },
+              "REDIS_URL": {
+                "fromService": {
+                  "id": "redis",
+                  "value": "connectionString"
+                }
+              },
+            }
+          },
+          {
+            "id": "bullet-train-worker",
+            "name": "Bullet Train Sidekiq",
+            "type": "fargate-worker",
+            "buildType": "nixpacks",
+            "cpu": 0.25,
+            "memory": 0.5,
+            "minInstances": 1,
+            "maxInstances": 1,
+            "startCommand": "bundle exec sidekiq"
+          },
+          {
+            "id": "db",
+            "name": "Database",
+            "type": "rds",
+            "engine": "postgres",
+            "engineVersion": "15",
+            "instanceSize": "db.t4g.micro",
+            "storage": 20,
+            "private": false
+          },
+          {
+            "id": "redis",
+            "name": "Redis",
+            "type": "elasticache",
+            "engine": "redis",
+            "engineVersion": "7.0",
+            "instanceSize": "cache.t4g.small",
+            "connectionStringEnvVarName": "REDIS_URL"
+          }
+        ]
+      }
+    ]
+  }
