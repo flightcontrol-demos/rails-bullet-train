@@ -31,7 +31,7 @@
                   "id": "redis",
                   "value": "connectionString"
                 }
-              },
+              }
             }
           },
           {
@@ -43,7 +43,22 @@
             "memory": 0.5,
             "minInstances": 1,
             "maxInstances": 1,
-            "startCommand": "bundle exec sidekiq"
+            "buildCommand": "",
+            "startCommand": "bundle exec sidekiq",
+            "envVariables": {
+                "DATABASE_URL": {
+                  "fromService": {
+                    "id": "db",
+                    "value": "dbConnectionString"
+                  }
+                },
+                "REDIS_URL": {
+                  "fromService": {
+                    "id": "redis",
+                    "value": "connectionString"
+                  }
+                }
+              }
           },
           {
             "id": "db",
