@@ -157,5 +157,6 @@ Rails.application.configure do
   # If you need to customize your application's configuration, this is the place to do it. This helps avoid merge
   # conflicts in the future when Rails or Bullet Train update their own default settings.
   config.hosts << ".cloudfront.net"
+  config.hosts << "10.192.11.240"
 
 end
