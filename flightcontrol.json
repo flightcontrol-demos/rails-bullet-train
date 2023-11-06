@@ -39,13 +39,14 @@
             "name": "Bullet Train Sidekiq",
             "type": "fargate-worker",
             "buildType": "nixpacks",
-            "cpu": 0.25,
-            "memory": 0.5,
+            "cpu": 0.5,
+            "memory": 1,
             "minInstances": 1,
             "maxInstances": 1,
             "buildCommand": "",
             "startCommand": "bundle exec sidekiq",
             "envVariables": {
+                "RAILS_ENV":"production",
                 "DATABASE_URL": {
                   "fromService": {
                     "id": "db",
